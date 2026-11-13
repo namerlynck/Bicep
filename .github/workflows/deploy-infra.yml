@@ -1,11 +1,11 @@
-name: Deploy Service Bus
+name: Deploy infrastructure
 
 on:
   push:
     branches: [main]
     paths:
       - 'infra/**'
-      - '.github/workflows/deploy-servicebus.yml'
+      - '.github/workflows/deploy-infra.yml'
   workflow_dispatch:
 
 permissions:
@@ -13,7 +13,9 @@ permissions:
 
 env:
   RESOURCE_GROUP: rg-Nathan-Amerlynck # your own resource group
-  SERVICE_BUS_NAME: sb-Nathan-Amerlynck # 6-50 chars, unique in Azure
+  SERVICE_BUS_NAME: sb-Nathan-Amerlynck # your Service Bus namespace from Deploy Azure Resources
+  FIRST_NAME: 'Nathan' # used in the names of all resources
+  LAST_NAME: 'Amerlynck'
 
 jobs:
   deploy:
@@ -32,12 +34,12 @@ jobs:
           az deployment group what-if \
             --resource-group "$RESOURCE_GROUP" \
             --template-file infra/main.bicep \
-            --parameters serviceBusName="$SERVICE_BUS_NAME"
+            --parameters serviceBusName="$SERVICE_BUS_NAME" firstName="$FIRST_NAME" lastName="$LAST_NAME"
 
       - name: Deploy Bicep
         run: |
           az deployment group create \
-            --name "servicebus-${{ github.run_number }}" \
+            --name "infra-${{ github.run_number }}" \
             --resource-group "$RESOURCE_GROUP" \
             --template-file infra/main.bicep \
-            --parameters serviceBusName="$SERVICE_BUS_NAME"
+            --parameters serviceBusName="$SERVICE_BUS_NAME" firstName="$FIRST_NAME" lastName="$LAST_NAME"

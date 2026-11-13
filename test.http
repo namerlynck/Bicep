@@ -1,0 +1,5 @@
+### Paste the HTTP URL of your Logic App trigger below (Azure portal > Logic app designer)
+POST <HTTP URL of your trigger>
+Content-Type: application/json
+
+{"message": "Hello Service Bus"}
