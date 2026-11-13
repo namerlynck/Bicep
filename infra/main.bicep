@@ -15,7 +15,7 @@ param serviceBusName string
 param location string = 'northeurope'
 
 @description('Image of the Container App: the quickstart image first, your own image after 4.6.2')
-param containerAppImage string = 'mcr.microsoft.com/k8se/quickstart:latest'
+param containerAppImage string = 'crnathanamerlynck.azurecr.io/message-processor:v1'
 
 // Service Bus namespace (Deploy Azure Resources) and its queues (4.3)
 resource serviceBus 'Microsoft.ServiceBus/namespaces@2024-01-01' = {
